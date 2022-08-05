@@ -4,8 +4,8 @@ namespace App\Http\Controllers\API\v1\User;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Main\Controller;
-use App\Models\User\User;
-use App\Models\UserWGS;
+use App\Models\User\UserWGSKarawang;
+use App\Models\User\UserWGSSubang;
 use Carbon\Carbon;
 
 class UserController extends Controller
@@ -17,12 +17,55 @@ class UserController extends Controller
      */
     public function index()
     {
-        return UserWGS::paginate(10);
+        return response(
+            [
+                'message' => "What are you looking for?",
+            ],
+            200
+        );
     }
 
-    public function remove(Request $request)
+    public function listUserSubang()
     {
-        $user = UserWGS::whereId($request->id)->first();
+        return UserWGSSubang::paginate(10);
+    }
+
+    public function listUserKarawang()
+    {
+        return UserWGSKarawang::paginate(10);
+    }
+
+    public function removeUserKarawang(Request $request)
+    {
+        $user = UserWGSKarawang::whereId($request->id)->first();
+
+        if($user === NULL){
+            return response(
+                [
+                    'message' => "User tidak ditemukan",
+                ],
+                404
+            );
+        }else{
+
+            $user->is_active = 0;
+            $user->is_deleted = 1;
+            $user->email = "isremoved-".carbon::now()->format("Ymdhis")."-".$user->email;
+            $user->save();
+
+            return response(
+                [
+                    'message' => "Akun $user->name berhasil dihapus",
+                ],
+                200
+            );
+        }
+
+    }
+
+    public function removeUserSubang(Request $request)
+    {
+        $user = UserWGSSubang::whereId($request->id)->first();
 
         if($user === NULL){
             return response(

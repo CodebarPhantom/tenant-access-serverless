@@ -51,6 +51,7 @@ class UserController extends Controller
             $user->is_active = 0;
             $user->is_deleted = 1;
             $user->email = "isremoved-".carbon::now()->format("Ymdhis")."-".$user->email;
+            $user->phone = "rmv".$user->phone;
             $user->save();
 
             return response(
@@ -79,6 +80,7 @@ class UserController extends Controller
             $user->is_active = 0;
             $user->is_deleted = 1;
             $user->email = "isremoved-".carbon::now()->format("Ymdhis")."-".$user->email;
+            $user->phone = "rmv".$user->phone;
             $user->save();
 
             return response(

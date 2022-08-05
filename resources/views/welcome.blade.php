@@ -2,7 +2,7 @@
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
-  <title>CodePen - Pickle-Rick Sliced 404</title>
+  <title>404 - Eryan Fauzan</title>
   <link href="https://fonts.googleapis.com/css?family=Nunito:700" rel="stylesheet">
 
   <link rel="stylesheet" type="text/css" href="{{ asset('/css/style.css') }}" />

@@ -35,9 +35,9 @@ class UserController extends Controller
         return UserWGSKarawang::paginate(10);
     }
 
-    public function removeUserKarawang(Request $request)
+    public function removeUserKarawang($id)
     {
-        $user = UserWGSKarawang::whereId($request->id)->first();
+        $user = UserWGSKarawang::whereId($id)->first();
 
         if($user === NULL){
             return response(
@@ -63,9 +63,9 @@ class UserController extends Controller
 
     }
 
-    public function removeUserSubang(Request $request)
+    public function removeUserSubang($id)
     {
-        $user = UserWGSSubang::whereId($request->id)->first();
+        $user = UserWGSSubang::whereId($id)->first();
 
         if($user === NULL){
             return response(

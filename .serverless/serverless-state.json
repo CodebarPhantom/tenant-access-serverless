@@ -180,7 +180,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/laravel-serverless/dev/1659669995093-2022-08-05T03:26:35.093Z/laravel-serverless.zip"
+                "S3Key": "serverless/laravel-serverless/dev/1659670997457-2022-08-05T03:43:17.457Z/laravel-serverless.zip"
               },
               "Handler": "public/index.php",
               "Runtime": "provided.al2",
@@ -208,7 +208,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/laravel-serverless/dev/1659669995093-2022-08-05T03:26:35.093Z/laravel-serverless.zip"
+                "S3Key": "serverless/laravel-serverless/dev/1659670997457-2022-08-05T03:43:17.457Z/laravel-serverless.zip"
               },
               "Handler": "artisan",
               "Runtime": "provided.al2",
@@ -230,24 +230,24 @@
               "ArtisanLogGroup"
             ]
           },
-          "WebLambdaVersionzO9tGROq3ussrznzPzQ1tUDQhoKwU4PeqZtozXV9pw": {
+          "WebLambdaVersionkHsxLEkV5ZmehdnY7Grtl28Hobmg1VDwMd51mxL4": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "WebLambdaFunction"
               },
-              "CodeSha256": "hylKKJXI+qEMQ1fKTbcj5zdbCmT+kFgsiXaFTeXmseM="
+              "CodeSha256": "7lqdGabJnM5lVMwIhTusXBGNM2PW/M+ZbJFZi1D1ZTI="
             }
           },
-          "ArtisanLambdaVersiongSbmfxILlnbEm4u5pYO2Cysk6VxswTxY1MfKz6A4GVE": {
+          "ArtisanLambdaVersion9il62MhpNi9yvbL9kTOKV2c4iUWSvudJx1OytZNIA": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "ArtisanLambdaFunction"
               },
-              "CodeSha256": "hylKKJXI+qEMQ1fKTbcj5zdbCmT+kFgsiXaFTeXmseM="
+              "CodeSha256": "7lqdGabJnM5lVMwIhTusXBGNM2PW/M+ZbJFZi1D1ZTI="
             }
           },
           "HttpApi": {
@@ -355,7 +355,7 @@
           "WebLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "WebLambdaVersionzO9tGROq3ussrznzPzQ1tUDQhoKwU4PeqZtozXV9pw"
+              "Ref": "WebLambdaVersionkHsxLEkV5ZmehdnY7Grtl28Hobmg1VDwMd51mxL4"
             },
             "Export": {
               "Name": "sls-laravel-serverless-dev-WebLambdaFunctionQualifiedArn"
@@ -364,7 +364,7 @@
           "ArtisanLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "ArtisanLambdaVersiongSbmfxILlnbEm4u5pYO2Cysk6VxswTxY1MfKz6A4GVE"
+              "Ref": "ArtisanLambdaVersion9il62MhpNi9yvbL9kTOKV2c4iUWSvudJx1OytZNIA"
             },
             "Export": {
               "Name": "sls-laravel-serverless-dev-ArtisanLambdaFunctionQualifiedArn"
@@ -515,7 +515,7 @@
         "memory": 1024,
         "runtime": "provided.al2",
         "vpc": {},
-        "versionLogicalId": "WebLambdaVersionzO9tGROq3ussrznzPzQ1tUDQhoKwU4PeqZtozXV9pw"
+        "versionLogicalId": "WebLambdaVersionkHsxLEkV5ZmehdnY7Grtl28Hobmg1VDwMd51mxL4"
       },
       "artisan": {
         "handler": "artisan",
@@ -529,7 +529,7 @@
         "memory": 1024,
         "runtime": "provided.al2",
         "vpc": {},
-        "versionLogicalId": "ArtisanLambdaVersiongSbmfxILlnbEm4u5pYO2Cysk6VxswTxY1MfKz6A4GVE"
+        "versionLogicalId": "ArtisanLambdaVersion9il62MhpNi9yvbL9kTOKV2c4iUWSvudJx1OytZNIA"
       }
     },
     "configValidationMode": "warn",
@@ -549,7 +549,7 @@
         ],
         "artifactsS3KeyDirname": "serverless/laravel-serverless/dev/code-artifacts",
         "artifact": "C:\\Eryan\\Coding\\laravel\\mini_command_center_be\\.serverless\\laravel-serverless.zip",
-        "artifactDirectoryName": "serverless/laravel-serverless/dev/1659669995093-2022-08-05T03:26:35.093Z"
+        "artifactDirectoryName": "serverless/laravel-serverless/dev/1659670997457-2022-08-05T03:43:17.457Z"
       },
       "functions": {
         "$ref": "$[\"service\"][\"functions\"]"
@@ -563,7 +563,7 @@
     "artifact": "C:\\Eryan\\Coding\\laravel\\mini_command_center_be\\.serverless\\laravel-serverless.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/laravel-serverless/dev/1659669995093-2022-08-05T03:26:35.093Z",
+    "artifactDirectoryName": "serverless/laravel-serverless/dev/1659670997457-2022-08-05T03:43:17.457Z",
     "artifact": "laravel-serverless.zip"
   }
 }

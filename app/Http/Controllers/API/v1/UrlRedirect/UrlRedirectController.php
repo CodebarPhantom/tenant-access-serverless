@@ -44,4 +44,16 @@ class UrlRedirectController extends ApiControllerV1
 
         return $this->callFunction($func);
     }
+
+    public function show($id)
+    {
+        $func = function () use ($id) {
+
+            $url_redirect = UrlRedirect::find($id);
+
+            $this->data = compact("url_redirect");
+        };
+
+        return $this->callFunction($func);
+    }
 }

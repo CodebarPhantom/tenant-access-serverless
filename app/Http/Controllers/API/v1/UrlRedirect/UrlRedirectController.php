@@ -56,4 +56,27 @@ class UrlRedirectController extends ApiControllerV1
 
         return $this->callFunction($func);
     }
+
+    public function update($id, Request $request)
+    {
+        $func = function () use ($id, $request) {
+
+            $this->validate($request, [
+                "name" => ["required"],
+                "to_url" => ["required"],
+                "app_information" => ["required"]
+            ]);
+
+            $urlRedirect = UrlRedirect::find($id);
+            $urlRedirect->name = $request->name;
+            $urlRedirect->slug = Str::slug($urlRedirect->name);
+            $urlRedirect->to_url = $request->to_url;
+            $urlRedirect->app_information = $request->app_information;
+            $urlRedirect->save();
+
+            array_push($this->messages, $urlRedirect->name . " URL Berhasil Diubah");
+        };
+
+        return $this->callFunction($func);
+    }
 }

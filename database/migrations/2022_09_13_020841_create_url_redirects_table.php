@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug');
             $table->string('to_url');
-            $table->string('apps_information');
+            $table->string('app_information');
             $table->softDeletes();
             $table->timestamps();
         });

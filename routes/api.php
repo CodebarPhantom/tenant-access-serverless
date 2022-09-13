@@ -36,6 +36,7 @@ Route::prefix("/v1")->as("v1.")->group(function() {
 
     Route::prefix("/url-redirect")->as("url-redirect.")->group(function() {
         Route::get("/",[UrlRedirectController::class,'index']);
+        Route::post("store",[UrlRedirectController::class,'store']);
     });
 
 

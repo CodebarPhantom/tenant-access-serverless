@@ -27,69 +27,95 @@ class UserController extends Controller
 
     public function listUserSubang()
     {
-        return UserWGSSubang::paginate(10);
+        return response(
+            [
+                'message' => "What are you looking for?",
+            ],
+            200
+        );
+
+        //return UserWGSSubang::paginate(10);
     }
 
     public function listUserKarawang()
     {
-        return UserWGSKarawang::paginate(10);
+        return response(
+            [
+                'message' => "What are you looking for?",
+            ],
+            200
+        );
+        //return UserWGSKarawang::paginate(10);
     }
 
     public function removeUserKarawang($id)
     {
-        $user = UserWGSKarawang::whereId($id)->first();
+        return response(
+            [
+                'message' => "What are you looking for?",
+            ],
+            200
+        );
+        // $user = UserWGSKarawang::whereId($id)->first();
 
-        if($user === NULL){
-            return response(
-                [
-                    'message' => "User tidak ditemukan",
-                ],
-                404
-            );
-        }else{
+        // if($user === NULL){
+        //     return response(
+        //         [
+        //             'message' => "User tidak ditemukan",
+        //         ],
+        //         404
+        //     );
+        // }else{
 
-            $user->is_active = 0;
-            $user->is_deleted = 1;
-            $user->email = "isremoved-".carbon::now()->format("Ymdhis")."-".$user->email;
-            $user->phone = "rmv".$user->phone;
-            $user->save();
+        //     $user->is_active = 0;
+        //     $user->is_deleted = 1;
+        //     $user->email = "isremoved-".carbon::now()->format("Ymdhis")."-".$user->email;
+        //     $user->phone = "rmv".$user->phone;
+        //     $user->save();
 
-            return response(
-                [
-                    'message' => "Akun $user->name berhasil dihapus",
-                ],
-                200
-            );
-        }
+        //     return response(
+        //         [
+        //             'message' => "Akun $user->name berhasil dihapus",
+        //         ],
+        //         200
+        //     );
+        // }
 
     }
 
     public function removeUserSubang($id)
     {
-        $user = UserWGSSubang::whereId($id)->first();
+        return response(
+            [
+                'message' => "What are you looking for?",
+            ],
+            200
+        );
 
-        if($user === NULL){
-            return response(
-                [
-                    'message' => "User tidak ditemukan",
-                ],
-                404
-            );
-        }else{
+        // $user = UserWGSSubang::whereId($id)->first();
 
-            $user->is_active = 0;
-            $user->is_deleted = 1;
-            $user->email = "isremoved-".carbon::now()->format("Ymdhis")."-".$user->email;
-            $user->phone = "rmv".$user->phone;
-            $user->save();
+        // if($user === NULL){
+        //     return response(
+        //         [
+        //             'message' => "User tidak ditemukan",
+        //         ],
+        //         404
+        //     );
+        // }else{
 
-            return response(
-                [
-                    'message' => "Akun $user->name berhasil dihapus",
-                ],
-                200
-            );
-        }
+        //     $user->is_active = 0;
+        //     $user->is_deleted = 1;
+        //     $user->email = "isremoved-".carbon::now()->format("Ymdhis")."-".$user->email;
+        //     $user->phone = "rmv".$user->phone;
+        //     $user->save();
+
+        //     return response(
+        //         [
+        //             'message' => "Akun $user->name berhasil dihapus",
+        //         ],
+        //         200
+        //     );
+        // }
 
     }
 

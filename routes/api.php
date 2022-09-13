@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\v1\User\UserController;
+use App\Http\Controllers\API\v1\UrlRedirect\UrlRedirectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +33,14 @@ Route::prefix("/v1")->as("v1.")->group(function() {
         Route::get('/user',[UserController::class,'listUserSubang']);
         Route::delete('/user/{id}',[UserController::class,'removeUserSubang']);
     });
+
+    Route::prefix("/url-redirect")->as("url-redirect.")->group(function() {
+        Route::get("/",[UrlRedirectController::class,'index']);
+    });
+
+
+
+
 });
 
 

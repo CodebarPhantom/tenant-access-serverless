@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\v1\TenantAccess\TenantAccessSlaCalculateController;
 use App\Http\Controllers\API\v1\User\UserController;
 use App\Http\Controllers\API\v1\UrlRedirect\UrlRedirectController;
 use Illuminate\Http\Request;
@@ -39,6 +40,10 @@ Route::prefix("/v1")->as("v1.")->group(function() {
         Route::get("/{id}",[UrlRedirectController::class,'show']);
         Route::post("/store",[UrlRedirectController::class,'store']);
         Route::patch("/{id}",[UrlRedirectController::class,'update']);
+    });
+
+    Route::prefix("/calculate")->group(function() {
+        Route::get("/",[TenantAccessSlaCalculateController::class,'index']);
     });
 
 

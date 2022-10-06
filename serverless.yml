@@ -34,6 +34,10 @@ functions:
         layers:
             - ${bref:layer.php-81} # PHP
             - ${bref:layer.console} # The "console" layer
+        events:
+            - schedule:
+                  rate: rate(30 minutes)
+                  input: '"tenant-access:calculate-sla-tenant-access"'
 
 plugins:
     # We need to include the Bref plugin

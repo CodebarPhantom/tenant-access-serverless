@@ -51,17 +51,37 @@ class CalculateSLATenantAccessLog extends Command
                     $tenantAccessSLACalculate = new TenantAccessSlaCalculate();
                 }
 
-                //if ($tenantAccessSLACalculate->time_required_by_admin_to_dispatch === NULL) {
 
-
-                    //dd($test);
-                //}else{
-                   // dd("test 2");
-
-                //}
                 $tenantAccessSLACalculate->ticket_no = $tenantAccessReport->ticket_no;
-                $tenantAccessSLACalculate->admin_dispatch_date = $tenantAccessReport->admin_dispatch_date;
-                $tenantAccessSLACalculate->time_required_by_admin_to_dispatch =  $this->calculateFromWorkHours( $tenantAccessReport->create_date,$tenantAccessReport->admin_dispatch_date);
+
+                if ($tenantAccessReport->admin_dispatch_date != $tenantAccessSLACalculate->admin_dispatch_date) {
+                    $tenantAccessSLACalculate->time_required_by_admin_to_dispatch =  $this->calculateFromWorkHours($tenantAccessReport->create_date,$tenantAccessReport->admin_dispatch_date);
+                    $tenantAccessSLACalculate->admin_dispatch_date = $tenantAccessReport->admin_dispatch_date;
+                }
+
+                if ($tenantAccessReport->agent_progress_date != $tenantAccessSLACalculate->agent_progress_date) {
+                    $tenantAccessSLACalculate->time_required_by_agent_to_response =  $this->calculateFromWorkHours($tenantAccessReport->admin_dispatch_date,$tenantAccessReport->agent_progress_date);
+                    $tenantAccessSLACalculate->agent_progress_date = $tenantAccessReport->agent_progress_date;
+                }
+
+                if ($tenantAccessReport->agent_submit_date != $tenantAccessSLACalculate->agent_submit_date) {
+                    $tenantAccessSLACalculate->time_required_by_agent_to_complete =  $this->calculateFromWorkHours($tenantAccessReport->agent_progress_date,$tenantAccessReport->agent_submit_date);
+                    $tenantAccessSLACalculate->agent_submit_date = $tenantAccessReport->agent_submit_date;
+                }
+
+                if ($tenantAccessReport->close_date != $tenantAccessSLACalculate->close_date) {
+                    $tenantAccessSLACalculate->time_required_by_admin_to_close =  $this->calculateFromWorkHours($tenantAccessReport->agent_submit_date,$tenantAccessReport->close_date);
+                    $tenantAccessSLACalculate->close_date = $tenantAccessReport->close_date;
+                }
+
+                if($tenantAccessSLACalculate->admin_dispatch_date != NULL && $tenantAccessSLACalculate->agent_progress_date != NULL && $tenantAccessSLACalculate->agent_submit_date != NULL && $tenantAccessSLACalculate->close_date != NULL){
+                   // dd($tenantAccessSLACalculate->admin_dispatch_date, $tenantAccessSLACalculate->agent_progress_date,  $tenantAccessSLACalculate->agent_submit_date,$tenantAccessSLACalculate->close_date);
+                    $timeRequiredTotal = $this->timeToSeconds($tenantAccessSLACalculate->time_required_by_admin_to_dispatch) + $this->timeToSeconds($tenantAccessSLACalculate->time_required_by_agent_to_response) +
+                    $this->timeToSeconds($tenantAccessSLACalculate->time_required_by_agent_to_complete) + $this->timeToSeconds($tenantAccessSLACalculate->time_required_by_admin_to_close);
+
+                    $tenantAccessSLACalculate->time_required_total = floor($timeRequiredTotal / 3600) . gmdate(":i:s", $timeRequiredTotal % 3600);
+                }
+
                 $tenantAccessSLACalculate->save();
 
             }
@@ -74,6 +94,8 @@ class CalculateSLATenantAccessLog extends Command
 
     private function calculateFromWorkHours($startTime,$endTime)
     {
+
+
         $startDateTime  = new Carbon($startTime);
         $endDateTime    = new Carbon($endTime);
         $slaTime = "";
@@ -94,7 +116,7 @@ class CalculateSLATenantAccessLog extends Command
                 }elseif($startDateTime<=$startDateTime->copy()->setTime($this->jamMasuk,0,0) && $endDateTime<=$endDateTime->copy()->setTime($this->jamMasuk,0,0)){
                     $slaTimeSecond = 0;
                 }elseif($startDateTime<=$startDateTime->copy()->setTime($this->jamMasuk,0,0) && $endDateTime>=$endDateTime->copy()->setTime($this->jamPulang,0,0)){
-                    $slaTimeSecond = 32400;
+                    $slaTimeSecond = 32400; // 9 jam
                 }else{
                     $slaTimeSecond = $this->calculateDiffSecond($startDateTime, $endDateTime);
                 }
@@ -114,7 +136,7 @@ class CalculateSLATenantAccessLog extends Command
                         $tempDate->addDay();
                     }else{
                         if($tempDate->format("Y-m-d") == $startDateTime->format("Y-m-d")){
-                            //echo $tempDate . " ". $startDateTime."\n";
+
                             $slaTimeSecond += $this->calculateDiffSecond($startDateTime, $startDateTime->copy()->setTime($this->jamPulang,00,00));
 
                         }else{
@@ -127,11 +149,14 @@ class CalculateSLATenantAccessLog extends Command
                 $slaTimeSecond += $this->calculateDiffSecond($tempDate->copy()->setTime($this->jamMasuk,00,00), $endDateTime);
             }
             $slaTime = floor($slaTimeSecond / 3600) . gmdate(":i:s", $slaTimeSecond % 3600);
+
             return $slaTime;
         }else{
-            return NULL; // tidak valid
+            return $slaTime = floor($slaTimeSecond / 3600) . gmdate(":i:s", $slaTimeSecond % 3600);; // tidak valid
         }
+
     }
+
 
     private function calculateDiffSecond($startDateTime,$endDateTime)
     {
@@ -148,20 +173,25 @@ class CalculateSLATenantAccessLog extends Command
             $slaTime = $clockIn->diffInSeconds($endDateTime);
 
         }elseif($startDateTime >= $clockIn && $endDateTime >= $clockOut){
-            //bisa bolak balik bagi hasil zzz
 
             $slaTime = $startDateTime->diffInSeconds($clockOut);
-            //dd($slaTime);
-            // if($startDateTime->format("Y-m-d") &&  $endDateTime->format("Y-m-d")){
-            //     $slaTime->
-            // }
-
 
         }else{
             $slaTime = $clockIn->diffInSeconds($clockOut);
         }
 
         return $slaTime;
+    }
+
+    function timeToSeconds($time)
+    {
+        $time == NULL ? "00:00:00" : $time;
+
+        $arr = explode(':', $time);
+        if (count($arr) === 3) {
+            return $arr[0] * 3600 + $arr[1] * 60 + $arr[2];
+        }
+        return $arr[0] * 60 + $arr[1];
     }
 
         //startdatetime = 5 Oktober 17.01

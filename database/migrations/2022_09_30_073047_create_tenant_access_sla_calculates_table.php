@@ -22,6 +22,8 @@ return new class extends Migration
             $table->time("time_required_by_agent_to_response")->nullable();
             $table->dateTime("agent_submit_date")->nullable();
             $table->time("time_required_by_agent_to_complete")->nullable();
+            $table->dateTime("close_date")->nullable();
+            $table->time("time_required_by_admin_to_close")->nullable();
             $table->time("time_required_total")->nullable();
             $table->timestamps();
         });
